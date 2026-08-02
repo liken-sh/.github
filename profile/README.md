@@ -1,6 +1,6 @@
 # liken
 
-**Li**nux + **K**ubernetes: a small operating system that boots a
+**Li**nux + **K**ub**e**r**n**etes: a small operating system that boots a
 machine directly into Kubernetes and uses Kubernetes as the service
 manager.
 
