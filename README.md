@@ -9,6 +9,10 @@ each one sets beyond the standard.  The standard is:
 
 - Pull requests merge by squash, titled and described by the pull request,
   or by rebase, and never with a merge commit.  A merged branch is deleted.
+- A workflow's `GITHUB_TOKEN` only reads unless the workflow asks for
+  more, and no workflow approves a pull request.  A pull request from a
+  fork by someone who has never contributed waits for approval before its
+  workflows run.
 - main keeps a linear history that no one force-pushes or deletes.  A
   repository in the `pr` tier also takes changes only through a pull
   request whose `All checks passed` job succeeded.
@@ -36,6 +40,8 @@ terraform plan
 terraform apply
 GH_TOKEN=$GITHUB_TOKEN ./code-security.sh          # report each repository with no configuration
 GH_TOKEN=$GITHUB_TOKEN ./code-security.sh --apply  # and attach one
+GH_TOKEN=$GITHUB_TOKEN ./actions.sh                # report where forks' pull requests run without approval
+GH_TOKEN=$GITHUB_TOKEN ./actions.sh --apply        # and require it
 ```
 
 A new entry in `repositories.yaml` creates its repository.  An entry for
@@ -45,10 +51,11 @@ archives rather than deletes a repository dropped from the list.
 
 ## CI
 
-A pull request plans, and a push to main applies and attaches a code
-security configuration to any repository that has none.  A daily run
-fails when its plan has any change in it or a repository has no
-configuration, which catches a setting changed by hand, an unlisted
+A pull request plans, and a push to main applies, attaches a code
+security configuration to any repository that has none, and requires
+approval for forks' pull requests where it is not required.  A daily run
+fails when its plan has any change in it, or when either script finds
+something to change, which catches a setting changed by hand, an unlisted
 repository, and an expired token.  The workflow's secrets are
 `SETTINGS_TOKEN`, a fine-grained token with Administration read and write
 and Contents read on every repository and Administration read and write on
