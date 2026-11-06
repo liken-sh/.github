@@ -28,14 +28,12 @@ private repository has none.
 
 ## Applying
 
-The state is in a Linode Object Storage bucket, read with the key in the
-1Password item "GitHub Settings State - liken-sh" (see `backend.tf`).  The
-token is in the 1Password item "GitHub Terraform - liken-sh".
+The state is in a Linode Object Storage bucket (see `backend.tf`).
 
 ```
-export AWS_ACCESS_KEY_ID=…      # the state item's username
-export AWS_SECRET_ACCESS_KEY=…  # the state item's password
-export GITHUB_TOKEN=…           # the token item's credential
+export AWS_ACCESS_KEY_ID=…      # the bucket's access key ID
+export AWS_SECRET_ACCESS_KEY=…  # and its secret
+export GITHUB_TOKEN=…           # a token with SETTINGS_TOKEN's access (see CI)
 terraform plan
 terraform apply
 GH_TOKEN=$GITHUB_TOKEN ./code-security.sh          # report each repository with no configuration
@@ -60,4 +58,4 @@ repository, and an expired token.  The workflow's secrets are
 `SETTINGS_TOKEN`, a fine-grained token with Administration read and write
 and Contents read on every repository and Administration read and write on
 the organization, and `STATE_ACCESS_KEY_ID` and `STATE_SECRET_ACCESS_KEY`,
-from the 1Password items.
+the bucket's access key.

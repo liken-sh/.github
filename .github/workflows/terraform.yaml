@@ -26,8 +26,7 @@ concurrency:
 env:
   # SETTINGS_TOKEN is a fine-grained token with Administration read and
   # write, and Contents read, on every liken-sh repository, and with
-  # organization Administration read and write. The state keys are in the
-  # 1Password item "GitHub Settings State - liken-sh".
+  # organization Administration read and write.
   GITHUB_TOKEN: ${{ secrets.SETTINGS_TOKEN }}
   GH_TOKEN: ${{ secrets.SETTINGS_TOKEN }}
   AWS_ACCESS_KEY_ID: ${{ secrets.STATE_ACCESS_KEY_ID }}
