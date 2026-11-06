@@ -67,6 +67,10 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: ./code-security.sh
 
+      - name: Report forks' pull requests that run without approval
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: ./actions.sh
+
       - name: Apply
         if: github.event_name == 'push'
         run: terraform apply -input=false -auto-approve -lock-timeout=5m
@@ -74,3 +78,7 @@ jobs:
       - name: Attach a code security configuration where there is none
         if: github.event_name == 'push'
         run: ./code-security.sh --apply
+
+      - name: Require approval for forks' pull requests
+        if: github.event_name == 'push'
+        run: ./actions.sh --apply

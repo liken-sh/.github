@@ -75,3 +75,15 @@ resource "terraform_data" "every_repository_listed" {
     }
   }
 }
+
+# The repositories that code-security.sh and actions.sh read after an
+# apply to set what the provider has no resource for.
+output "repositories" {
+  description = "The listed repositories, which code-security.sh checks"
+  value       = sort(keys(local.repositories))
+}
+
+output "public_repositories" {
+  description = "The public repositories, which actions.sh checks"
+  value       = sort(keys(local.public))
+}
