@@ -4,11 +4,6 @@
 # organization's setting caps every repository's, so one setting covers
 # them all.
 
-import {
-  to = github_actions_organization_workflow_permissions.token
-  id = "liken-sh"
-}
-
 resource "github_actions_organization_workflow_permissions" "token" {
   organization_slug                = "liken-sh"
   default_workflow_permissions     = "read"
