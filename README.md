@@ -33,7 +33,7 @@ The state is in a Linode Object Storage bucket (see `backend.tf`).
 ```
 export AWS_ACCESS_KEY_ID=…      # the bucket's access key ID
 export AWS_SECRET_ACCESS_KEY=…  # and its secret
-export GITHUB_TOKEN=…           # a token with SETTINGS_TOKEN's access (see CI)
+export GITHUB_TOKEN=…           # a token with the App's access (see CI)
 terraform plan
 terraform apply
 GH_TOKEN=$GITHUB_TOKEN ./code-security.sh          # report each repository with no configuration
@@ -54,8 +54,15 @@ security configuration to any repository that has none, and requires
 approval for forks' pull requests where it is not required.  A daily run
 fails when its plan has any change in it, or when either script finds
 something to change, which catches a setting changed by hand, an unlisted
-repository, and an expired token.  The workflow's secrets are
-`SETTINGS_TOKEN`, a fine-grained token with Administration read and write
-and Contents read on every repository and Administration read and write on
-the organization, and `STATE_ACCESS_KEY_ID` and `STATE_SECRET_ACCESS_KEY`,
-the bucket's access key.
+repository, and a GitHub App key that stopped working.
+
+The workflow acts as the `liken-sh-settings` GitHub App, which the
+organization owns and has installed on every repository.  The App has
+Administration read and write and Contents read on the repositories, and
+Administration read and write on the organization.  Each run makes a
+token of the App's that lasts an hour, from the App's client ID in the
+variable `SETTINGS_APP_CLIENT_ID` and its private key in the secret
+`SETTINGS_APP_PRIVATE_KEY`.  The key does not expire.  To replace it,
+generate a second key on the App's page, set the secret to it, and delete
+the first.  The other secrets are `STATE_ACCESS_KEY_ID` and
+`STATE_SECRET_ACCESS_KEY`, the bucket's access key.
