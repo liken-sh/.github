@@ -16,6 +16,8 @@ each one sets beyond the standard.  The standard is:
 - main keeps a linear history that no one force-pushes or deletes.  A
   repository in the `pr` tier also takes changes only through a pull
   request whose `All checks passed` job succeeded.
+- Only the repository's admins and GitHub Actions create, move, or delete
+  a tag.
 - One of the organization's code security configurations covers each
   repository: "GitHub recommended", or "Github recommended with custom
   code scanning" for a repository that runs CodeQL from a workflow of its
