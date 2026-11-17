@@ -49,6 +49,9 @@ jobs:
           client-id: ${{ vars.SETTINGS_APP_CLIENT_ID }}
           private-key: ${{ secrets.SETTINGS_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
+          permission-administration: write
+          permission-contents: read
+          permission-organization-administration: write
 
       # Terraform's provider reads GITHUB_TOKEN, and gh reads GH_TOKEN.
       - name: Give the token to Terraform and gh
