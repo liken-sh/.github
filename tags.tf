@@ -1,7 +1,8 @@
 # One ruleset per public repository, named tags, on every tag. Only the
-# repository's admins and GitHub Actions create, move, or delete a tag, so
-# a token that can push a branch cannot cut a release. liken's ci workflow
-# publishes a release for each tag that starts with 2.
+# repository's admins create, move, or delete a tag, so a token that can
+# push a branch cannot cut a release. liken's ci workflow publishes a
+# release for each tag that starts with 2. GitHub refuses the GitHub
+# Actions app as a bypass actor here, and no workflow creates a tag.
 
 locals {
   # The repository role whose members bypass a ruleset.
@@ -26,12 +27,6 @@ resource "github_repository_ruleset" "tags" {
   bypass_actors {
     actor_id    = local.repository_admin
     actor_type  = "RepositoryRole"
-    bypass_mode = "always"
-  }
-
-  bypass_actors {
-    actor_id    = local.github_actions
-    actor_type  = "Integration"
     bypass_mode = "always"
   }
 
