@@ -26,6 +26,16 @@ The organization is on GitHub's Free plan, which has no organization
 rulesets, so each public repository has a ruleset of its own, and a
 private repository has none.
 
+## Set by hand
+
+GitHub has no API for the organization's personal access token policy,
+so Terraform cannot hold it and the daily plan cannot report a change to
+it.  Under Settings, Personal access tokens, Fine-grained tokens, the
+maximum lifetime is 90 days.  GitHub refuses a member's token that lasts
+longer, and a token with no expiration, when it reaches the
+organization.  No workflow here uses a personal access token (see CI),
+so the policy only limits a token that someone makes later.
+
 ## Applying
 
 The state is in a Linode Object Storage bucket (see `backend.tf`).
