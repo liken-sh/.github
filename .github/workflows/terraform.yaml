@@ -43,7 +43,7 @@ jobs:
       # Contents read, on every liken-sh repository and Administration on the
       # organization.
       # This step makes a token of the App's that lasts an hour.
-      - uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+      - uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
         id: settings-token
         with:
           client-id: ${{ vars.SETTINGS_APP_CLIENT_ID }}
@@ -63,7 +63,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
         with:
-          terraform_version: 1.17.0
+          terraform_version: 1.17.2
           terraform_wrapper: false
 
       - run: terraform fmt -check -recursive
